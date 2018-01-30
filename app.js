@@ -1,3 +1,5 @@
+'use strict';
+
 var fs= require('fs');
 var lanList = {
     'en-au.html':['au','en-au','EN','AU','AUD'],
@@ -63,10 +65,12 @@ var style = '.pm-lang-en{font:12px/1.5 BlinkMacSystemFont,-apple-system, Helveti
     '.pm-info{background-color:#3b7ac0;color:#fff;font-size:16px;line-height:1;}\n' +
     '\n';
 
-mkdir('images');
-createStyle('style.css');
-for (var page in lanList){
-    createHtml(page,lanList[page]);
+function make() {
+    mkdir('images');
+    createStyle('style.css');
+    for (var page in lanList){
+        createHtml(page,lanList[page]);
+    }
 }
 
 function mkdir(dirpath) {
