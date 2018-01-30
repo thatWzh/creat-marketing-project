@@ -1,6 +1,4 @@
-'use strict';
-
-var fs= require('fs');
+/*var fs= require('fs');
 var path = require('path');
 
 var lanList = {
@@ -178,4 +176,21 @@ function createStyle(name) {
 }
 
 make();
-console.log(path.resolve());
+console.log(path.resolve());*/
+
+var packageJson = require('../package.json');
+var argv = require('yargs')
+    .alias('v','version')
+    .alias('h','help')
+    .option('u',{
+        alias: 'url',
+        demand: false,
+        default: '',
+        describe: 'url of images',
+        type: 'string'
+    })
+    .argv;
+
+console.log(argv)
+
+

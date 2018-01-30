@@ -21,6 +21,10 @@
   },
   "homepage": "https://github.com/thatWzh/marketing-project-maker#readme",
   "bin": {
-    "make": "./index.js"
+    "maker": "./index.js"
+  },
+  "dependencies": {
+    "chalk": "^2.3.0",
+    "yargs": "^11.0.0"
   }
 }
