@@ -1,20 +1,21 @@
 var fs= require('fs');
 var lanList = {
-    'de-de.html':'de',
-    'en-au.html':'au',
-    'en-hk.html':'hken',
-    'en-sg.html':'sg',
-    'en-us.html':'en',
-    'es-es.html':'es',
-    'fr-fr.html':'fr',
-    'id-id.html':'id',
-    'ja-jp.html':'jp',
-    'ko-kr.html':'kr',
-    'ms-my.html':'my',
-    'ru-ru.html':'ru',
-    'th-th.html':'th',
-    'zh-hk.html':'hk'
-}
+    'en-au.html':['au','en-au','EN','AU','AUD'],
+    'en-us.html':['en','en-us','EN','EN','USD'],
+    'en-hk.html':['hken','en-hk','EN','HK','HKD'],
+    'en-sg.html':['sg','en-sg','EN','SG','SGD'],
+    'de-de.html':['de','de-de','DE','DE','EUR'],
+    'es-es.html':['es','es-es','ES','ES','EUR'],
+    'id-id.html':['id','id-id','ID','ID','IDR'],
+    'fr-fr.html':['fr','fr-fr','FR','FR','EUR'],
+    'ja-jp.html':['jp','ja-jp','JP','JP','JPY'],
+    'ko-kr.html':['kr','ko-kr','KR','KR','KRW'],
+    'ms-my.html':['my','ms-my','MY','MY','MYR'],
+    'ru-ru.html':['ru','ru-ru','RU','RU','RUB'],
+    'th-th.html':['th','th-th','TH','TH','THD'],
+    'zh-hk.html':['hk','zh-hk','TC','HK','HKD']
+};
+
 var style = '.pm-lang-en{font:12px/1.5 BlinkMacSystemFont,-apple-system, Helvetica, Arial, sans-serif;}\n' +
     '.pm-lang-hk{font:12px/1.5 "Microsoft Jhenghei", "PingFang HK", "STHeitiTC-Light", tahoma, arial, sans-serif;}\n' +
     '.pm-lang-hken{font:12px/1.5 BlinkMacSystemFont,-apple-system, Helvetica, Arial, sans-serif;}\n' +
@@ -63,10 +64,10 @@ var style = '.pm-lang-en{font:12px/1.5 BlinkMacSystemFont,-apple-system, Helveti
     '\n';
 
 mkdir('images');
+createStyle('style.css');
 for (var page in lanList){
     createHtml(page,lanList[page]);
 }
-createStyle('style.css');
 
 function mkdir(dirpath) {
     if (!fs.existsSync(dirpath)){
@@ -86,12 +87,12 @@ function handelModel(lan) {
         '    <link rel="stylesheet" href="//pages.trip.com/css/v4/global-s.css"/>\n' +
         '    <link rel="stylesheet" href="style.css" />\n' +
         '    <script type="text/javascript" src="//pages.trip.com/js/lib/jquery-1.11.3.min.js"></script>\n' +
-        '    <script type="text/javascript" src="//pages.trip.com/js/v4/header/header-'+lan+'.js"></script>\n' +
+        '    <script type="text/javascript" src="//pages.trip.com/js/v4/header/header-' + lan[0] + '.js"></script>\n' +
         '    <script type="text/javascript" src="//pages.trip.com/js/market/tab-hotel-gallery.js"></script>\n' +
         '    <script type="text/javascript" src="//pages.trip.com/js/market/tab-flight-gallery.js"></script>\n' +
         '</head>\n' +
         '<body>\n' +
-        '<div class="pm-lang-'+lan+'">\n' +
+        '<div class="pm-lang-' + lan[0] + '">\n' +
         '\n' +
         '\t<div class="pm-banner-con banner-con"></div>\n' +
         '\n' +
@@ -101,6 +102,32 @@ function handelModel(lan) {
         '\t\t</div>\n' +
         '\t</div>\n' +
         '\t\n' +
+        '\t<h2 class="title flight-tit" id="flight-tit">Hot Return Flight Deals</h2>\n' +
+        '\t<div class="pm-flight-block" id="pm-flight-block-0000001">\n' +
+        '\t\t<div class="pm-center"><div class="pm-block-loading"><span class="mc-loading-36-blue"></span></div></div>\n' +
+        '\t\t<script type="text/javascript">\n' +
+        '            (new TabFlightGallery({\n' +
+        '                promoID: 130,\n' +
+        '                locale: \''+lan[1]+'\',\n' +
+        '                rootId: \'pm-flight-block-0000001\'\n' +
+        '            })).init();\n' +
+        '\t\t</script>\n' +
+        '\t</div>\n' +
+        '\t<h2 class="title hotel-tit">Popular hotel deals</h2>\n' +
+        '\t<div class="pm-hotel-block" id="pm-hotel-block-0000001">\n' +
+        '\t\t<div class="pack-loading pm-center"><span class="mc-loading-36-blue"></span></div>\n' +
+        '\t\t<script type="text/javascript">\n' +
+        '            (new TabHotelGallery({\n' +
+        '                promoID: 130,\n' +
+        '                language: \'' + lan[2] + '\',\n' +
+        '                market: \'' + lan[3] + '\',\n' +
+        '                currency: \'' + lan[4] + '\',\n' +
+        '                checkIn: \'2018-05-01\',\n' +
+        '                checkOut: \'2018-05-31\',\n' +
+        '                rootId: \'pm-hotel-block-0000001\'\n' +
+        '            })).init();\n' +
+        '\t\t</script>\n' +
+        '\t</div>\n'+
         '\t<div class="pm-terms">\n' +
         '\t\t<div class="pm-inner">\n' +
         '\t\t\t<h2 class="pm-terms__tit">Terms & Conditions</h2>\n' +
@@ -118,7 +145,7 @@ function handelModel(lan) {
         '</div>\n' +
         '\n' +
         '<script type="text/javascript" src="//webresource.english.c-ctrip.com/resaresenglish/ibu/fe-market/js/cquery-with-pro.bc62000a.js"></script>\n' +
-        '<script type="text/javascript" src="//pages.trip.com/js/v4/footer/footer-'+lan+'.js"></script>\n' +
+        '<script type="text/javascript" src="//pages.trip.com/js/v4/footer/footer-' + lan[0] + '.js"></script>\n' +
         '<input id="page_id" type="hidden" value="" />\n' +
         '\n' +
         '</body>\n' +
