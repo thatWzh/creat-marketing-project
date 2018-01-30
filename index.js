@@ -2,6 +2,4 @@
 
 'use strict';
 
-var chalk = require('chalk');
-
-require('./app');
+require('./bin/app');

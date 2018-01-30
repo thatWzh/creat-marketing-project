@@ -1,6 +1,8 @@
 'use strict';
 
 var fs= require('fs');
+var path = require('path');
+
 var lanList = {
     'en-au.html':['au','en-au','EN','AU','AUD'],
     'en-us.html':['en','en-us','EN','EN','USD'],
@@ -174,3 +176,6 @@ function createStyle(name) {
         })
     }
 }
+
+make();
+console.log(path.resolve());

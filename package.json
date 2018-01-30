@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/thatWzh/marketing-project-maker/issues"
   },
-  "homepage": "https://github.com/thatWzh/marketing-project-maker#readme"
+  "homepage": "https://github.com/thatWzh/marketing-project-maker#readme",
+  "bin": {
+    "make": "./index.js"
+  }
 }
