@@ -1,6 +1,3 @@
-/*var fs= require('fs');
-var path = require('path');
-
 var lanList = {
     'en-au.html':['au','en-au','EN','AU','AUD'],
     'en-us.html':['en','en-us','EN','EN','USD'],
@@ -17,6 +14,42 @@ var lanList = {
     'th-th.html':['th','th-th','TH','TH','THD'],
     'zh-hk.html':['hk','zh-hk','TC','HK','HKD']
 };
+var dicList = ['design','Design',
+    'au','AU',
+    'en','En',
+    'hken','HKEN',
+    'sg','SG',
+    'de','DE',
+    'es','ES',
+    'id','ID',
+    'fr','FR',
+    'jp','JP',
+    'kr','KR',
+    'my','MY',
+    'ru','RU',
+    'th','TH',
+    'hk','HK',
+];
+function travel(dir,callback) {
+    fs.readdirSync(dir).forEach(function(file) {
+        var pathname = path.join(dir,file);
+        if(fs.statSync(pathname).isDirectory()) {
+            if (array_contain(dicList,file)){
+                travel(pathname,callback);
+            }
+        }else {
+            callback(pathname,file);
+        }
+    });
+}
+
+function array_contain(array,obj) {
+    for (var i = 0;i<array.length;i++){
+        if (array[i] == obj)
+            return true;
+    }
+    return false;
+}
 
 var style = '.pm-lang-en{font:12px/1.5 BlinkMacSystemFont,-apple-system, Helvetica, Arial, sans-serif;}\n' +
     '.pm-lang-hk{font:12px/1.5 "Microsoft Jhenghei", "PingFang HK", "STHeitiTC-Light", tahoma, arial, sans-serif;}\n' +
@@ -36,7 +69,7 @@ var style = '.pm-lang-en{font:12px/1.5 BlinkMacSystemFont,-apple-system, Helveti
     '.pm-lang-ru .banner-con{background-image:url(./images/banner-ru.jpg)}\n' +
     '.pm-lang-th .banner-con{background-image:url(./images/banner-th.jpg)}\n' +
     '.pm-lang-id .banner-con{background-image:url(./images/banner-id.jpg)}\n' +
-    '.pm-lang-my .banner-con{background-image:url(./images/banner-m-y.jpg)}\n' +
+    '.pm-lang-my .banner-con{background-image:url(./images/banner-my.jpg)}\n' +
     '\n' +
     '\n' +
     '@media screen and (max-width: 640px) {\n' +
@@ -65,12 +98,13 @@ var style = '.pm-lang-en{font:12px/1.5 BlinkMacSystemFont,-apple-system, Helveti
     '.pm-info{background-color:#3b7ac0;color:#fff;font-size:16px;line-height:1;}\n' +
     '\n';
 
-function make() {
-    mkdir('images');
+function init() {
+    createDirectory('images');
+    createDirectory('model');
     createStyle('style.css');
-    for (var page in lanList){
-        createHtml(page,lanList[page]);
-    }
+    // for (var page in lanList){
+    //     createHtml(page,lanList[page]);
+    // }
 }
 
 function mkdir(dirpath) {
@@ -157,40 +191,68 @@ function handelModel(lan) {
 }
 
 function createHtml(name,lan) {
-    if (!fs.exists(name)){
+    if (!fsExistsSync(name)){
         var handeledModel = handelModel(lan);
         fs.writeFile(name,handeledModel,function (err) {
             if (err) return console.log(err);
-            console.log('模板'+name+'生成成功');
+            console.log(chalk.green('模板'+name+'生成成功'));
         })
     }
 }
 
 function createStyle(name) {
-    if (!fs.exists(name)){
+    if (!fsExistsSync(name)){
         fs.writeFile(name,style,function (err) {
             if (err) return console.log(err);
-            console.log('style.css生成成功');
+            console.log(chalk.green('style.css生成成功'));
         })
     }
 }
+function createDirectory(name) {
+    if (!fsExistsSync(name)){
+        mkdir(name);
+        console.log(chalk.green(name+'目录生成成功'))
+    }
+}
 
-make();
-console.log(path.resolve());*/
+function fsExistsSync(path) {
+    try{
+        fs.accessSync(path,fs.F_OK);
+    }catch(e){
+        return false;
+    }
+    return true;
+}
 
+function handelImage(pathname,filename)
+{
+    fs.writeFileSync(filename,fs.readFileSync(pathname))
+}
+var fs = require('fs');
+var stat = fs.stat;
+var path = require('path');
+var image = require('imageinfo');
+var filePath = path.resolve();
 var packageJson = require('../package.json');
+var chalk = require('chalk');
 var argv = require('yargs')
     .alias('v','version')
     .alias('h','help')
     .option('u',{
         alias: 'url',
-        demand: false,
         default: '',
         describe: 'url of images',
         type: 'string'
     })
+    .command('init','init directory',function (yargs) {
+        init();
+    })
     .argv;
 
-console.log(argv)
-
-
+if(argv.u){
+    travel(argv.u,function (pathname,file) {
+        var ms = image(fs.readFileSync(pathname));
+        var filename = filePath+'/images/'+file;
+        ms.mimeType && handelImage(pathname,filename);
+    })
+}
