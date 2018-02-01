@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "chalk": "^2.3.0",
-    "yargs": "^11.0.0"
+    "commander": "^2.13.0",
+    "imageinfo": "^1.0.4"
   }
 }
