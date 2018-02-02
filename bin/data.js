@@ -56,12 +56,12 @@ module.exports = {
     '    <link rel="stylesheet" href="//pages.trip.com/css/v4/global-s.css"/>\n' +
     '    <link rel="stylesheet" href="style.css" />\n' +
     '    <script type="text/javascript" src="//pages.trip.com/js/lib/jquery-1.11.3.min.js"></script>\n' +
-    '    <script type="text/javascript" src="//pages.trip.com/js/v4/header/header-en.js"></script>\n' +
+    '    <script type="text/javascript" src="//pages.trip.com/js/v4/header/header-${js}.js"></script>\n' +
     '    <script type="text/javascript" src="//pages.trip.com/js/market/tab-hotel-gallery.js"></script>\n' +
     '    <script type="text/javascript" src="//pages.trip.com/js/market/tab-flight-gallery.js"></script>\n' +
     '</head>\n' +
     '<body>\n' +
-    '<div class="pm-lang-hken">\n' +
+    '<div class="pm-lang-${js}">\n' +
     '\n' +
     '\t<div class="pm-banner-con banner-con"></div>\n' +
     '\n' +
@@ -78,7 +78,7 @@ module.exports = {
     '\t\t<script type="text/javascript">\n' +
     '            (new TabFlightGallery({\n' +
     '                promoID: 130,\n' +
-    '                locale:"en_au",\n' +
+    '                locale:"${locale}",\n' +
     '                rootId: \'pm-flight-block-0000001\'\n' +
     '            })).init();\n' +
     '\t\t</script>\n' +
@@ -89,9 +89,9 @@ module.exports = {
     '\t\t<script type="text/javascript">\n' +
     '            (new TabHotelGallery({\n' +
     '                promoID: 130,\n' +
-    '                language: \'EN\',\n' +
-    '                market: \'AU\',\n' +
-    '                currency: \'AUD\',\n' +
+    '                language: \'${language}\',\n' +
+    '                market: \'${market}\',\n' +
+    '                currency: \'${currency}\',\n' +
     '                checkIn: \'2018-05-01\',\n' +
     '                checkOut: \'2018-05-31\',\n' +
     '                rootId: \'pm-hotel-block-0000001\'\n' +
@@ -116,7 +116,7 @@ module.exports = {
     '</div>\n' +
     '\n' +
     '<script type="text/javascript" src="//webresource.english.c-ctrip.com/resaresenglish/ibu/fe-market/js/cquery-with-pro.bc62000a.js"></script>\n' +
-    '<script type="text/javascript" src="//pages.trip.com/js/v4/footer/footer-${test}.js"></script>\n' +
+    '<script type="text/javascript" src="//pages.trip.com/js/v4/footer/footer-${js}.js"></script>\n' +
     '<input id="page_id" type="hidden" value="" />\n' +
     '\n' +
     '</body>\n' +
@@ -252,6 +252,5 @@ module.exports = {
             "market":"HK",
             "currency":"HKD"
         }
-    },
-    test:"111"
+    }
 }
