@@ -1,6 +1,6 @@
 {
   "name": "marketing-project-maker",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "to create a marketing-project",
   "main": "index.js",
   "scripts": {
