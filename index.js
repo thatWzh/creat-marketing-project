@@ -1,11 +1,13 @@
 #!/usr/bin/env node
-var app = require('./bin/app.js');
-var program = require('commander');
+const app = require('./bin/app.js');
+const program = require('commander');
+const packageJson = require('./package.json')
 
 function image(url) {
     app.image(url);
 }
 
+program.version(packageJson.version);
 program.option('-u,--url <value>','url of image dictionary',image);
 program.command('init')
     .description('init project dictionary')
