@@ -2,7 +2,7 @@
 此包用于初始化市场前端项目，git地址[marketing-project-maker](https://github.com/thatWzh/marketing-project-maker).<br>
 使用方法：<br>
 >`maker -h`、`maker --help`:获取帮助信息<br><br>
->`maker -v`、`maker --version`：获取版本信息<br><br>
+>`maker -V`、`maker --version`：获取版本信息<br><br>
 >`maker init`:初始化项目目录（生成model文件夹、images文件夹、style.css）<br><br>
 >`maker -u <url>`、`maker --url <url>`:根据输入的url将图片存入images文件夹<br>
 ```
